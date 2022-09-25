@@ -6,7 +6,8 @@ import 'package:flutter/src/widgets/framework.dart';
 import '/helpers/db_helper.dart';
 
 class Login extends StatefulWidget {
-  const Login({Key? key}) : super(key: key);
+  final bool admin;
+  const Login({Key? key,this.admin=false}) : super(key: key);
 
   @override
   State<Login> createState() => _LoginState();
@@ -68,7 +69,7 @@ class _LoginState extends State<Login> {
                         ),
                         TextFormField(
                           obscureText: true,
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             filled: true,
                             fillColor: Colors.white,
                             enabledBorder: OutlineInputBorder(
@@ -86,10 +87,10 @@ class _LoginState extends State<Login> {
                           },
                           controller: PasswordController,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         SizedBox(
@@ -103,31 +104,42 @@ class _LoginState extends State<Login> {
                             child: Text('Login'),
                             onPressed: () {
                               if (usernameController.text.isEmpty ||
-                          PasswordController.text.isEmpty) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text('Enter username and password'),
-                            backgroundColor: Colors.red,
-                          ),
-                        );
-                        return;
-                      }
-                      DBHelper.getUser(
-                        usernameController.text,
-                        PasswordController.text,
-                      );
+                                  PasswordController.text.isEmpty) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content:
+                                        Text('Enter username and password'),
+                                    backgroundColor: Colors.red,
+                                  ),
+                                );
+                                return;
+                              }
+                              DBHelper.getUser(
+                                usernameController.text,
+                                PasswordController.text,
+                              );
 
-                      if (DBHelper.loggedInUser == null) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text('Wrong username or Password'),
-                            backgroundColor: Colors.red,
-                          ),
-                        );
-                      
-                    }
+                              if (DBHelper.loggedInUser == null) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text('Wrong username or Password'),
+                                    backgroundColor: Colors.red,
+                                  ),
+                                );
+                              } else {
+                                //
+                                Navigator.push<void>(
+                                  context,
+                                  MaterialPageRoute<void>(
+                                    builder: (BuildContext context) => Trips(),
+                                  ),
+                                );
+                              }
                             },
                           ),
+                        ),
+                        const SizedBox(
+                          height: 10,
                         ),
                         GestureDetector(
                             onTap: () {
@@ -138,7 +150,11 @@ class _LoginState extends State<Login> {
                                 ),
                               );
                             },
-                            child: Text('Register Now'))
+                            child: const Text(
+                              'Register Now',
+                              style: TextStyle(
+                                  decoration: TextDecoration.underline),
+                            ))
                       ],
                     )),
               ),

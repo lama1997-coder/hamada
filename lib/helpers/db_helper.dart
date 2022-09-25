@@ -26,6 +26,7 @@ class DBHelper {
   }
 
   static void getUser(String username, String password) async {
+    print(usersBox);
     if (usersBox.containsKey(username)) {
       final user = UserModel.fromJson(usersBox.get(username));
       if (user.password == password) {
@@ -43,6 +44,8 @@ class DBHelper {
   static void delTrip(TripModel trip) async {
     tripsBox.delete(trip.no);
   }
+
+
 
   static void addTripToLoggedUser(TripModel trip) async {
     loggedInUser!.trips = [...loggedInUser!.trips, trip];

@@ -1,12 +1,14 @@
 import 'package:booking/Login.dart';
 import 'package:booking/admin_tips.dart';
 import 'package:booking/edit.dart';
+import 'package:booking/helpers/db_helper.dart';
 import 'package:booking/register.dart';
 import 'package:booking/trips.dart';
 import 'package:booking/welcom.dart';
 import 'package:flutter/material.dart';
 
 void main() {
+  DBHelper.init();
   runApp(const MyApp());
 }
 
